@@ -1,4 +1,4 @@
-# Google Drive 連結擷取工具 / Google Drive Link Extractor
+# Google Drive 連結批次匯出工具 / Google Drive Link batch Extractor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/blues32767/google-drive-link-extractor/releases)
