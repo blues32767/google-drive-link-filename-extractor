@@ -1,11 +1,23 @@
-# Google Drive 連結擷取工具
+# Google Drive 連結擷取工具 / Google Drive Link Extractor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/blues32767/google-drive-link-extractor/releases)
 
+<div align="center">
+  <h2>
+    <a href="#chinese-中文">中文</a> | 
+    <a href="#english">English</a>
+  </h2>
+</div>
+
+---
+
+<a name="chinese-中文"></a>
+## 中文版
+
 一個簡單易用的工具，可以擷取 Google Drive 資料夾中的檔案名稱與分享連結，並匯出為 CSV 清單。
 
-## 功能特色
+### 功能特色
 
 - 從 Google Drive 資料夾中擷取所有檔案和子資料夾的名稱與連結
 - 支援中文和英文界面
@@ -13,7 +25,7 @@
 - 簡潔直觀的使用者介面
 - 完全免費且開源
 
-## 線上使用
+### 線上使用
 
 直接訪問我們的網頁應用程式：
 [https://blues32767.github.io/google-drive-link-extractor/](https://blues32767.github.io/google-drive-link-extractor/)
@@ -21,7 +33,7 @@
 或使用 Google Apps Script 部署版本：
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
-## 使用說明
+### 使用說明
 
 1. 開啟應用程式連結
 2. 確保你的 Google Drive 資料夾權限設定為「知道連結的任何人為檢視者或編輯者」
@@ -29,9 +41,9 @@
 4. 點擊「下載 CSV 檔案」按鈕
 5. 等待處理完成，CSV 檔案會自動下載到你的裝置
 
-## 自行部署
+### 自行部署
 
-### 方法一：Google Apps Script 部署
+#### 方法一：Google Apps Script 部署
 
 1. 前往 [Google Apps Script](https://script.google.com/)
 2. 點擊「新專案」建立一個新的專案
@@ -42,7 +54,7 @@
 7. 設定執行身分為「我自己」，存取權限為「任何人」
 8. 點擊「部署」按鈕並授予必要的權限
 
-### 方法二：GitHub Pages 部署
+#### 方法二：GitHub Pages 部署
 
 1. Fork 本儲存庫
 2. 前往你的 Fork 儲存庫中的「Settings」>「Pages」
@@ -50,25 +62,25 @@
 4. 點擊「Save」按鈕
 5. 等待幾分鐘，你的網站將在 `https://<你的用戶名>.github.io/google-drive-link-extractor/` 上線
 
-## 技術說明
+### 技術說明
 
 - 前端：HTML、CSS、JavaScript
 - 後端：Google Apps Script
 - API：Google Drive API
 - 輸出格式：CSV (UTF-8 編碼)
 
-## 常見問題
+### 常見問題
 
-### 為什麼我無法擷取某些資料夾的內容？
+#### 為什麼我無法擷取某些資料夾的內容？
 請確保資料夾的權限設定為「知道連結的任何人為檢視者或編輯者」，否則應用程式無法存取資料夾內容。
 
-### 是否支援巢狀資料夾？
+#### 是否支援巢狀資料夾？
 目前版本只支援擷取指定資料夾的直接子資料夾和檔案，不會遞迴擷取更深層的內容。
 
-### 支援哪些瀏覽器？
+#### 支援哪些瀏覽器？
 本工具支援所有現代瀏覽器，包括 Chrome、Firefox、Safari 和 Edge 的最新版本。
 
-## 貢獻指南
+### 貢獻指南
 
 歡迎對本專案進行貢獻！請遵循以下步驟：
 
@@ -78,27 +90,25 @@
 4. 推送到分支 (`git push origin feature/amazing-feature`)
 5. 開啟一個 Pull Request
 
-## 授權協議
+### 授權協議
 
 本專案採用 MIT 授權協議 - 詳見 [LICENSE](LICENSE) 檔案
 
-## 聯絡資訊
+### 聯絡資訊
 
 - 開發者：blues32767
 - GitHub：https://github.com/blues32767/
 - 版本：1.1.0
 - 最後更新：2025/03/04
 
---
+---
 
-# Google Drive Link Extractor
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/blues32767/google-drive-link-extractor/releases)
+<a name="english"></a>
+## English Version
 
 A simple tool to extract file names and sharing links from Google Drive folders and export them as a CSV list.
 
-## Features
+### Features
 
 - Extract all files and subfolders names and links from a Google Drive folder
 - Support for both Chinese and English interfaces
@@ -106,7 +116,7 @@ A simple tool to extract file names and sharing links from Google Drive folders 
 - Clean and intuitive user interface
 - Completely free and open source
 
-## Online Usage
+### Online Usage
 
 Access our web application directly:
 [https://blues32767.github.io/google-drive-link-extractor/](https://blues32767.github.io/google-drive-link-extractor/)
@@ -114,7 +124,7 @@ Access our web application directly:
 Or use the Google Apps Script deployed version:
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
-## How to Use
+### How to Use
 
 1. Open the application link
 2. Make sure your Google Drive folder's permission is set to "Anyone with the link as Viewer or Editor"
@@ -122,9 +132,9 @@ Or use the Google Apps Script deployed version:
 4. Click the "Download CSV" button
 5. Wait for processing to complete, and the CSV file will automatically download to your device
 
-## Self-Deployment
+### Self-Deployment
 
-### Method 1: Google Apps Script Deployment
+#### Method 1: Google Apps Script Deployment
 
 1. Go to [Google Apps Script](https://script.google.com/)
 2. Click "New Project" to create a new project
@@ -135,7 +145,7 @@ Or use the Google Apps Script deployed version:
 7. Set execution identity as "Me" and access as "Anyone"
 8. Click the "Deploy" button and grant the necessary permissions
 
-### Method 2: GitHub Pages Deployment
+#### Method 2: GitHub Pages Deployment
 
 1. Fork this repository
 2. Go to "Settings" > "Pages" in your forked repository
@@ -143,25 +153,25 @@ Or use the Google Apps Script deployed version:
 4. Click the "Save" button
 5. Wait a few minutes, and your site will be live at `https://<your-username>.github.io/google-drive-link-extractor/`
 
-## Technical Details
+### Technical Details
 
 - Frontend: HTML, CSS, JavaScript
 - Backend: Google Apps Script
 - API: Google Drive API
 - Output Format: CSV (UTF-8 encoded)
 
-## FAQ
+### FAQ
 
-### Why can't I extract content from certain folders?
+#### Why can't I extract content from certain folders?
 Make sure the folder's permission is set to "Anyone with the link as Viewer or Editor", otherwise the application cannot access the folder contents.
 
-### Does it support nested folders?
+#### Does it support nested folders?
 The current version only supports extracting direct subfolders and files from the specified folder. It does not recursively extract deeper content.
 
-### Which browsers are supported?
+#### Which browsers are supported?
 This tool supports all modern browsers, including the latest versions of Chrome, Firefox, Safari, and Edge.
 
-## Contributing
+### Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -171,11 +181,11 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+### License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-## Contact Information
+### Contact Information
 
 - Developer: blues32767
 - GitHub: https://github.com/blues32767/
