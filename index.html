@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Drive 連結擷取工具</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4285F4;
+      --primary-dark: #3367D6;
+      --success: #0F9D58;
+      --warning: #F4B400;
+      --error: #DB4437;
+      --text-primary: #202124;
+      --text-secondary: #5F6368;
+      --background: #ffffff;
+      --background-alt: #f8f9fa;
+      --border: #dadce0;
+      --radius: 8px;
+      --shadow: 0 1px 3px rgba(60, 64, 67, 0.12), 0 1px 2px rgba(60, 64, 67, 0.24);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Noto Sans TC', 'Roboto', sans-serif;
+      color: var(--text-primary);
+      background-color: var(--background-alt);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .card {
+      background-color: var(--background);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+    
+    .subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    
+    .alert {
+      background-color: rgba(244, 180, 0, 0.1);
+      border-left: 4px solid var(--warning);
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+    
+    .alert-content {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    .form-group {
+      margin-bottom: 24px;
+    }
+    
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+    }
+    
+    .input-wrapper {
+      position: relative;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border 0.2s ease;
+    }
+    
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 12px 24px;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    
+    .button:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .button:active {
+      transform: translateY(1px);
+    }
+    
+    .button-icon {
+      margin-right: 8px;
+    }
+    
+    .error-message {
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 16px;
+      min-height: 20px;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    
+    .footer-item {
+      margin-bottom: 8px;
+    }
+    
+    .footer-item .en {
+      font-size: 12px;
+      color: var(--text-secondary);
+      opacity: 0.8;
+    }
+    
+    .divider {
+      height: 1px;
+      background-color: var(--border);
+      margin: 16px 0;
+    }
+    
+    .loading {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    
+    .spinner {
+      border: 3px solid rgba(66, 133, 244, 0.2);
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin-right: 12px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .language-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    
+    .language-toggle button {
+      background: none;
+      border: none;
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 4px 8px;
+      margin: 0 4px;
+    }
+    
+    .language-toggle button.active {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .github-link {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .github-link:hover {
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px 16px;
+      }
+      
+      .card {
+        padding: 24px 16px;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-toggle">
+      <button onclick="switchLanguage('zh')" class="active" id="zh-btn">中文</button>
+      <span>|</span>
+      <button onclick="switchLanguage('en')" id="en-btn">English</button>
+    </div>
+    
+    <div class="card">
+      <div class="header">
+        <h1 id="title">Google Drive 連結擷取工具</h1>
+        <div class="subtitle" id="subtitle">擷取雲端硬碟資料夾內的檔案名稱與分享連結，匯出為 CSV 清單</div>
+      </div>
+      
+      <div class="alert">
+        <div class="alert-content" id="alert-content">
+          請確保 Google Drive 資料夾的存取權限設定為【知道連結的任何人為「檢視者」或「編輯者」】
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="folderUrl" id="folder-label">資料夾連結：</label>
+        <div class="input-wrapper">
+          <input type="text" id="folderUrl" name="folderUrl" placeholder="https://drive.google.com/drive/folders/..." autocomplete="off">
+        </div>
+      </div>
+      
+      <button onclick="downloadCsv()" class="button" id="download-btn">
+        <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        下載 CSV 檔案
+      </button>
+      
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <span id="loading-text">處理中，請稍候...</span>
+      </div>
+      
+      <p class="error-message" id="error"></p>
+    </div>
+    
+    <div class="footer">
+      <div class="footer-item">
+        <span class="zh">© 2025 Google Drive 連結擷取工具</span>
+        <div class="en">© 2025 Google Drive Link Extractor</div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <div class="footer-item">
+        <span class="zh">開發者：blues32767</span>
+        <div class="en">Developer: blues32767</div>
+      </div>
+      
+      <div class="footer-item">
+        <a href="https://github.com/blues32767/" class="github-link" target="_blank">https://github.com/blues32767/</a>
+      </div>
+      
+      <div class="footer-item">
+        <span class="zh">版本 1.1.0 | 最後更新：2025/03/04</span>
+        <div class="en">Version 1.1.0 | Last Updated: 2025/03/04</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 語言設定
+    const translations = {
+      zh: {
+        title: "Google Drive 連結擷取工具",
+        subtitle: "擷取雲端硬碟資料夾內的檔案名稱與分享連結，匯出為 CSV 清單",
+        alertContent: "請確保 Google Drive 資料夾的存取權限設定為[知道連結的任何人為「檢視者」或「編輯者」]",
+        folderLabel: "資料夾連結：",
+        downloadBtn: "下載 CSV 檔案",
+        loadingText: "處理中，請稍候...",
+        placeholder: "https://drive.google.com/drive/folders/..."
+      },
+      en: {
+        title: "Google Drive Link Extractor",
+        subtitle: "Extract file names and sharing links from Google Drive folders, export as CSV list",
+        alertContent: "Please ensure the Google Drive folder's access permission is set to [Anyone with the link as 'Viewer' or 'Editor']",
+        folderLabel: "Folder Link:",
+        downloadBtn: "Download CSV",
+        loadingText: "Processing, please wait...",
+        placeholder: "https://drive.google.com/drive/folders/..."
+      }
+    };
+    
+    function switchLanguage(lang) {
+      document.getElementById('title').textContent = translations[lang].title;
+      document.getElementById('subtitle').textContent = translations[lang].subtitle;
+      document.getElementById('alert-content').textContent = translations[lang].alertContent;
+      document.getElementById('folder-label').textContent = translations[lang].folderLabel;
+      document.getElementById('download-btn').innerHTML = `
+        <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        ${translations[lang].downloadBtn}
+      `;
+      document.getElementById('loading-text').textContent = translations[lang].loadingText;
+      document.getElementById('folderUrl').placeholder = translations[lang].placeholder;
+      
+      // 更新語言按鈕狀態
+      document.getElementById('zh-btn').classList.toggle('active', lang === 'zh');
+      document.getElementById('en-btn').classList.toggle('active', lang === 'en');
+      
+      // 更新頁尾顯示
+      const footerItems = document.querySelectorAll('.footer-item');
+      if (lang === 'zh') {
+        footerItems.forEach(item => {
+          const zh = item.querySelector('.zh');
+          const en = item.querySelector('.en');
+          if (zh && en) {
+            zh.style.display = 'inline';
+            en.style.display = 'block';
+            en.style.opacity = '0.8';
+          }
+        });
+      } else {
+        footerItems.forEach(item => {
+          const zh = item.querySelector('.zh');
+          const en = item.querySelector('.en');
+          if (zh && en) {
+            zh.style.display = 'none';
+            en.style.display = 'block';
+            en.style.opacity = '1';
+          }
+        });
+      }
+    }
+    
+    function downloadCsv() {
+  var folderUrl = document.getElementById("folderUrl").value;
+  
+  if (!folderUrl) {
+    document.getElementById("error").textContent = document.getElementById('zh-btn').classList.contains('active') 
+      ? "請輸入 Google Drive 資料夾連結" 
+      : "Please enter a Google Drive folder link";
+    return;
+  }
+  
+  // 顯示載入中狀態
+  document.getElementById("loading").style.display = "flex";
+  document.getElementById("error").textContent = "";
+
+  google.script.run
+    .withSuccessHandler(function(csv) {
+      // 隱藏載入中狀態
+      document.getElementById("loading").style.display = "none";
+      
+      // 檢查是否為權限錯誤或其他錯誤訊息
+      if (csv.includes("你所貼的 GoogleDrive 連結沒有存取權限") || 
+          csv.includes("資料夾連結格式不正確") ||
+          csv.startsWith("發生錯誤") || 
+          csv.startsWith("Error")) {
+        
+        // 在網頁上顯示錯誤訊息，將換行符轉換為HTML換行
+        document.getElementById("error").innerHTML = csv.replace(/\n/g, '<br>');
+      } else {
+        // 只有在不是錯誤訊息時才下載CSV
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+        element.setAttribute('download', 'drive_data.csv');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+        document.getElementById("error").textContent = "";
+      }
+    })
+    .withFailureHandler(function(error) {
+      // 隱藏載入中狀態
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("error").textContent = error.toString();
+    })
+    .getDriveDataAsCsv(folderUrl);
+}
+
+  </script>
+</body>
+</html>
