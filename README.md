@@ -27,10 +27,7 @@
 
 ### 線上使用
 
-直接訪問我們的網頁應用程式：
-[https://blues32767.github.io/google-drive-link-extractor/](https://blues32767.github.io/google-drive-link-extractor/)
-
-或使用 Google Apps Script 部署版本：
+使用 Google Apps Script 部署版本：
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
 ### 使用說明
@@ -54,14 +51,6 @@
 7. 設定執行身分為「我自己」，存取權限為「任何人」
 8. 點擊「部署」按鈕並授予必要的權限
 
-#### 方法二：GitHub Pages 部署
-
-1. Fork 本儲存庫
-2. 前往你的 Fork 儲存庫中的「Settings」>「Pages」
-3. 在「Source」區域，選擇「main」分支和「/(root)」資料夾
-4. 點擊「Save」按鈕
-5. 等待幾分鐘，你的網站將在 `https://<你的用戶名>.github.io/google-drive-link-extractor/` 上線
-
 ### 技術說明
 
 - 前端：HTML、CSS、JavaScript
@@ -79,16 +68,6 @@
 
 #### 支援哪些瀏覽器？
 本工具支援所有現代瀏覽器，包括 Chrome、Firefox、Safari 和 Edge 的最新版本。
-
-### 貢獻指南
-
-歡迎對本專案進行貢獻！請遵循以下步驟：
-
-1. Fork 本儲存庫
-2. 建立你的功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交你的變更 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 開啟一個 Pull Request
 
 ### 授權協議
 
@@ -118,9 +97,6 @@ A simple tool to extract file names and sharing links from Google Drive folders 
 
 ### Online Usage
 
-Access our web application directly:
-[https://blues32767.github.io/google-drive-link-extractor/](https://blues32767.github.io/google-drive-link-extractor/)
-
 Or use the Google Apps Script deployed version:
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
@@ -144,14 +120,6 @@ Or use the Google Apps Script deployed version:
 6. Select deployment type as "Web application"
 7. Set execution identity as "Me" and access as "Anyone"
 8. Click the "Deploy" button and grant the necessary permissions
-
-#### Method 2: GitHub Pages Deployment
-
-1. Fork this repository
-2. Go to "Settings" > "Pages" in your forked repository
-3. In the "Source" section, select "main" branch and "/(root)" folder
-4. Click the "Save" button
-5. Wait a few minutes, and your site will be live at `https://<your-username>.github.io/google-drive-link-extractor/`
 
 ### Technical Details
 
