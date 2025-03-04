@@ -17,6 +17,13 @@
 
 一個簡單易用的工具，可以擷取 Google Drive 資料夾中的檔案名稱與分享連結，並匯出為 CSV 清單。
 
+### 線上使用
+
+工具連結：
+[https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
+(Google Apps Script 部署版本)
+
+
 ### 功能特色
 
 - 從 Google Drive 資料夾中擷取所有檔案和子資料夾的名稱與連結
@@ -25,10 +32,6 @@
 - 簡潔直觀的使用者介面
 - 完全免費且開源
 
-### 線上使用
-
-使用 Google Apps Script 部署版本：
-[https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
 ### 使用說明
 
@@ -87,6 +90,12 @@
 
 A simple tool to extract file names and sharing links from Google Drive folders and export them as a CSV list.
 
+### Online Usage
+
+Tool link：
+[https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
+(Google Apps Script deployed version):
+
 ### Features
 
 - Extract all files and subfolders names and links from a Google Drive folder
@@ -95,10 +104,6 @@ A simple tool to extract file names and sharing links from Google Drive folders 
 - Clean and intuitive user interface
 - Completely free and open source
 
-### Online Usage
-
-Or use the Google Apps Script deployed version:
-[https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 
 ### How to Use
 
