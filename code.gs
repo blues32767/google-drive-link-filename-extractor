@@ -1,3 +1,9 @@
+/*© 2025 Google Drive 連結擷取工具 | Google Drive Link Extraction Tool
+開發者 | Developer：blues32767
+https://github.com/blues32767/
+版本 | Version 1.1.0 | 最後更新 | Last Updated：2025/03/04
+*/
+
 function doGet() {
   return HtmlService.createHtmlOutputFromFile('index');
 }
