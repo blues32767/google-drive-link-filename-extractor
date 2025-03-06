@@ -1,7 +1,9 @@
 <!-- © 2025 Google Drive 連結擷取工具 | Google Drive Link Extraction Tool
 開發者 | Developer：blues32767
 https://github.com/blues32767/
-版本 | Version 1.1.0 | 最後更新 | Last Updated：2025/03/04 -->
+版本 | Version 1.1.1 | 最後更新 | Last Updated：2025/03/06 -->
+
+
 
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -226,6 +228,141 @@ https://github.com/blues32767/
       text-decoration: underline;
     }
     
+    /* 新增表格樣式 */
+    .results-container {
+      display: none;
+      margin-top: 32px;
+    }
+    
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .results-title {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .results-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-button {
+      background-color: var(--background-alt);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .action-button:hover {
+      background-color: var(--border);
+      color: var(--text-primary);
+    }
+    
+    .results-table-container {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .results-table th {
+      background-color: var(--background-alt);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 500;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .results-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      word-break: break-all;
+    }
+    
+    .results-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .results-table tr:hover {
+      background-color: rgba(66, 133, 244, 0.05);
+    }
+    
+    .results-table .link-cell {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .results-table .link-cell:hover {
+      text-decoration: underline;
+    }
+    
+    .results-info {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      text-align: right;
+    }
+    
+    .selected {
+      background-color: rgba(66, 133, 244, 0.1) !important;
+    }
+    
+    /* 複製格式選擇 */
+    .copy-format-options {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    
+    .format-option {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    
+    .format-option input {
+      margin-right: 6px;
+    }
+    
+    /* 複製成功提示 */
+    .copy-toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--text-primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+    }
+    
+    .copy-toast.show {
+      opacity: 1;
+    }
+    
     @media (max-width: 600px) {
       .container {
         padding: 20px 16px;
@@ -237,6 +374,16 @@ https://github.com/blues32767/
       
       h1 {
         font-size: 20px;
+      }
+      
+      .results-table th,
+      .results-table td {
+        padding: 8px 12px;
+      }
+      
+      .copy-format-options {
+        flex-direction: column;
+        gap: 8px;
       }
     }
   </style>
@@ -268,7 +415,7 @@ https://github.com/blues32767/
         </div>
       </div>
       
-      <button onclick="downloadCsv()" class="button" id="download-btn">
+      <button onclick="processFolder()" class="button" id="download-btn">
         <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
@@ -283,6 +430,45 @@ https://github.com/blues32767/
       </div>
       
       <p class="error-message" id="error"></p>
+      
+      <!-- 新增結果表格區域 -->
+      <div class="results-container" id="results-container">
+        <div class="results-header">
+          <div class="results-title" id="results-title">擷取結果</div>
+          <div class="results-actions">
+            <button class="action-button" id="copy-all-btn" onclick="copyAllToClipboard()">複製全部</button>
+            <button class="action-button" id="copy-selected-btn" onclick="copySelectedToClipboard()">複製已選</button>
+          </div>
+        </div>
+        
+        <!-- 複製格式選項 -->
+        <div class="copy-format-options">
+          <div class="format-option">
+            <input type="radio" id="format-html" name="copy-format" value="html" checked>
+            <label for="format-html" id="format-html-label">HTML 表格格式 (適用於 Word/Excel)</label>
+          </div>
+          <div class="format-option">
+            <input type="radio" id="format-text" name="copy-format" value="text">
+            <label for="format-text" id="format-text-label">純文字格式</label>
+          </div>
+        </div>
+        
+        <div class="results-table-container">
+          <table class="results-table" id="results-table">
+            <thead>
+              <tr>
+                <th id="name-header">名稱</th>
+                <th id="link-header">連結</th>
+              </tr>
+            </thead>
+            <tbody id="results-tbody">
+              <!-- 動態填入資料 -->
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="results-info" id="results-info"></div>
+      </div>
     </div>
     
     <div class="footer">
@@ -303,11 +489,14 @@ https://github.com/blues32767/
       </div>
       
       <div class="footer-item">
-        <span class="zh">版本 1.1.0 | 最後更新：2025/03/04</span>
-        <div class="en">Version 1.1.0 | Last Updated: 2025/03/04</div>
+        <span class="zh">版本 1.1.1 | 最後更新：2025/03/06</span>
+        <div class="en">Version 1.1.1 | Last Updated: 2025/03/06</div>
       </div>
     </div>
   </div>
+  
+  <!-- 複製成功提示 -->
+  <div class="copy-toast" id="copy-toast"></div>
 
   <script>
     // 語言設定
@@ -319,7 +508,18 @@ https://github.com/blues32767/
         folderLabel: "資料夾連結：",
         downloadBtn: "下載 CSV 檔案",
         loadingText: "處理中，請稍候...",
-        placeholder: "https://drive.google.com/drive/folders/..."
+        placeholder: "https://drive.google.com/drive/folders/...",
+        resultsTitle: "擷取結果",
+        nameHeader: "名稱",
+        linkHeader: "連結",
+        copyAll: "複製全部",
+        copySelected: "複製已選",
+        resultsInfo: "共 {count} 個項目",
+        noResults: "沒有找到任何檔案或資料夾",
+        formatHtmlLabel: "HTML 表格格式 (適用於 Word/Excel)",
+        formatTextLabel: "純文字格式",
+        copySuccess: "已複製到剪貼簿",
+        copyFailed: "複製失敗"
       },
       en: {
         title: "Google Drive Link Extractor",
@@ -328,11 +528,29 @@ https://github.com/blues32767/
         folderLabel: "Folder Link:",
         downloadBtn: "Download CSV",
         loadingText: "Processing, please wait...",
-        placeholder: "https://drive.google.com/drive/folders/..."
+        placeholder: "https://drive.google.com/drive/folders/...",
+        resultsTitle: "Results",
+        nameHeader: "Name",
+        linkHeader: "Link",
+        copyAll: "Copy All",
+        copySelected: "Copy Selected",
+        resultsInfo: "{count} items total",
+        noResults: "No files or folders found",
+        formatHtmlLabel: "HTML table format (for Word/Excel)",
+        formatTextLabel: "Plain text format",
+        copySuccess: "Copied to clipboard",
+        copyFailed: "Copy failed"
       }
     };
     
+    // 當前語言
+    let currentLang = 'zh';
+    
+    // 儲存從 Google Drive 抓取的資料
+    let driveData = [];
+    
     function switchLanguage(lang) {
+      currentLang = lang;
       document.getElementById('title').textContent = translations[lang].title;
       document.getElementById('subtitle').textContent = translations[lang].subtitle;
       document.getElementById('alert-content').textContent = translations[lang].alertContent;
@@ -347,6 +565,18 @@ https://github.com/blues32767/
       `;
       document.getElementById('loading-text').textContent = translations[lang].loadingText;
       document.getElementById('folderUrl').placeholder = translations[lang].placeholder;
+      
+      // 更新表格相關文字
+      document.getElementById('results-title').textContent = translations[lang].resultsTitle;
+      document.getElementById('name-header').textContent = translations[lang].nameHeader;
+      document.getElementById('link-header').textContent = translations[lang].linkHeader;
+      document.getElementById('copy-all-btn').textContent = translations[lang].copyAll;
+      document.getElementById('copy-selected-btn').textContent = translations[lang].copySelected;
+      document.getElementById('format-html-label').textContent = translations[lang].formatHtmlLabel;
+      document.getElementById('format-text-label').textContent = translations[lang].formatTextLabel;
+      
+      // 更新結果資訊
+      updateResultsInfo();
       
       // 更新語言按鈕狀態
       document.getElementById('zh-btn').classList.toggle('active', lang === 'zh');
@@ -377,53 +607,313 @@ https://github.com/blues32767/
       }
     }
     
-    function downloadCsv() {
-  var folderUrl = document.getElementById("folderUrl").value;
-  
-  if (!folderUrl) {
-    document.getElementById("error").textContent = document.getElementById('zh-btn').classList.contains('active') 
-      ? "請輸入 Google Drive 資料夾連結" 
-      : "Please enter a Google Drive folder link";
-    return;
-  }
-  
-  // 顯示載入中狀態
-  document.getElementById("loading").style.display = "flex";
-  document.getElementById("error").textContent = "";
-
-  google.script.run
-    .withSuccessHandler(function(csv) {
-      // 隱藏載入中狀態
-      document.getElementById("loading").style.display = "none";
+    function processFolder() {
+      var folderUrl = document.getElementById("folderUrl").value;
       
-      // 檢查是否為權限錯誤或其他錯誤訊息
-      if (csv.includes("你所貼的 GoogleDrive 連結沒有存取權限") || 
-          csv.includes("資料夾連結格式不正確") ||
-          csv.startsWith("發生錯誤") || 
-          csv.startsWith("Error")) {
-        
-        // 在網頁上顯示錯誤訊息，將換行符轉換為HTML換行
-        document.getElementById("error").innerHTML = csv.replace(/\n/g, '<br>');
-      } else {
-        // 只有在不是錯誤訊息時才下載CSV
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
-        element.setAttribute('download', 'drive_data.csv');
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-        document.getElementById("error").textContent = "";
+      if (!folderUrl) {
+        document.getElementById("error").textContent = currentLang === 'zh' 
+          ? "請輸入 Google Drive 資料夾連結" 
+          : "Please enter a Google Drive folder link";
+        return;
       }
-    })
-    .withFailureHandler(function(error) {
-      // 隱藏載入中狀態
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("error").textContent = error.toString();
-    })
-    .getDriveDataAsCsv(folderUrl);
-}
+      
+      // 顯示載入中狀態
+      document.getElementById("loading").style.display = "flex";
+      document.getElementById("error").textContent = "";
+      document.getElementById("results-container").style.display = "none";
 
+      google.script.run
+        .withSuccessHandler(function(csv) {
+          // 隱藏載入中狀態
+          document.getElementById("loading").style.display = "none";
+          
+          // 檢查是否為權限錯誤或其他錯誤訊息
+          if (csv.includes("你所貼的 GoogleDrive 連結沒有存取權限") || 
+              csv.includes("資料夾連結格式不正確") ||
+              csv.startsWith("發生錯誤") || 
+              csv.startsWith("Error")) {
+            
+            // 在網頁上顯示錯誤訊息，將換行符轉換為HTML換行
+            document.getElementById("error").innerHTML = csv.replace(/\n/g, '<br>');
+          } else {
+            // 處理 CSV 資料
+            parseCsvAndDisplayTable(csv);
+            
+            // 下載 CSV 檔案
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv));
+            element.setAttribute('download', 'drive_data.csv');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            document.getElementById("error").textContent = "";
+          }
+        })
+        .withFailureHandler(function(error) {
+          // 隱藏載入中狀態
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("error").textContent = error.toString();
+        })
+        .getDriveDataAsCsv(folderUrl);
+    }
+    
+    // 解析 CSV 並顯示表格
+    function parseCsvAndDisplayTable(csv) {
+      // 移除 BOM 標記
+      if (csv.charCodeAt(0) === 0xFEFF) {
+        csv = csv.slice(1);
+      }
+      
+      // 解析 CSV
+      const rows = csv.split('\r\n');
+      driveData = [];
+      
+      // 跳過標題行，從第二行開始
+      for (let i = 1; i < rows.length; i++) {
+        if (!rows[i]) continue; // 跳過空行
+        
+        // 處理 CSV 中的引號和逗號
+        let row = rows[i];
+        let items = [];
+        let inQuotes = false;
+        let currentItem = '';
+        
+        for (let j = 0; j < row.length; j++) {
+          const char = row[j];
+          
+          if (char === '"') {
+            if (j + 1 < row.length && row[j + 1] === '"') {
+              // 處理連續兩個引號
+              currentItem += '"';
+              j++;
+            } else {
+              // 切換引號狀態
+              inQuotes = !inQuotes;
+            }
+          } else if (char === ',' && !inQuotes) {
+            // 找到分隔符，添加當前項目
+            items.push(currentItem);
+            currentItem = '';
+          } else {
+            currentItem += char;
+          }
+        }
+        
+        // 添加最後一個項目
+        items.push(currentItem);
+        
+        if (items.length >= 2) {
+          driveData.push({
+            name: items[0].replace(/^"|"$/g, ''),
+            link: items[1].replace(/^"|"$/g, '')
+          });
+        }
+      }
+      
+      // 顯示表格
+      displayTable(driveData);
+    }
+    
+    // 顯示表格
+    function displayTable(data) {
+      const tbody = document.getElementById('results-tbody');
+      tbody.innerHTML = '';
+      
+      if (data.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 2;
+        td.textContent = translations[currentLang].noResults;
+        td.style.textAlign = 'center';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      } else {
+        data.forEach((item, index) => {
+          const tr = document.createElement('tr');
+          tr.dataset.index = index;
+          tr.addEventListener('click', () => toggleRowSelection(tr));
+          
+          const nameTd = document.createElement('td');
+          nameTd.textContent = item.name;
+          tr.appendChild(nameTd);
+          
+          const linkTd = document.createElement('td');
+          const linkA = document.createElement('a');
+          linkA.href = item.link;
+          linkA.textContent = item.link;
+          linkA.className = 'link-cell';
+          linkA.target = '_blank';
+          linkA.addEventListener('click', (e) => e.stopPropagation());
+          linkTd.appendChild(linkA);
+          tr.appendChild(linkTd);
+          
+          tbody.appendChild(tr);
+        });
+      }
+      
+      // 顯示結果容器
+      document.getElementById('results-container').style.display = 'block';
+      
+      // 更新結果資訊
+      updateResultsInfo();
+    }
+    
+    // 更新結果資訊
+    function updateResultsInfo() {
+      const infoElement = document.getElementById('results-info');
+      if (driveData.length > 0) {
+        infoElement.textContent = translations[currentLang].resultsInfo.replace('{count}', driveData.length);
+      } else {
+        infoElement.textContent = '';
+      }
+    }
+    
+    // 切換行選擇
+    function toggleRowSelection(row) {
+      row.classList.toggle('selected');
+    }
+    
+    // 複製所有資料到剪貼簿
+    function copyAllToClipboard() {
+      if (driveData.length === 0) return;
+      
+      const format = document.querySelector('input[name="copy-format"]:checked').value;
+      let content;
+      
+      if (format === 'html') {
+        content = generateHtmlTable(driveData);
+      } else {
+        content = generateTextTable(driveData);
+      }
+      
+      copyToClipboard(content, format);
+    }
+    
+    // 複製選擇的資料到剪貼簿
+    function copySelectedToClipboard() {
+      const selectedRows = document.querySelectorAll('#results-tbody tr.selected');
+      if (selectedRows.length === 0) return;
+      
+      const selectedData = Array.from(selectedRows).map(row => {
+        const index = parseInt(row.dataset.index);
+        return driveData[index];
+      });
+      
+      const format = document.querySelector('input[name="copy-format"]:checked').value;
+      let content;
+      
+      if (format === 'html') {
+        content = generateHtmlTable(selectedData);
+      } else {
+        content = generateTextTable(selectedData);
+      }
+      
+      copyToClipboard(content, format);
+    }
+        // 生成 HTML 表格
+      // 生成 HTML 表格 (只有黑色表格線，完全無其他格式)
+    function generateHtmlTable(data) {
+      const nameHeader = translations[currentLang].nameHeader;
+      const linkHeader = translations[currentLang].linkHeader;
+      
+      let html = '<table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%; border: 1px solid black;">';
+      
+      // 添加表頭
+      html += '<thead><tr>';
+      html += `<th style="border: 1px solid black;">${nameHeader}</th>`;
+      html += `<th style="border: 1px solid black;">${linkHeader}</th>`;
+      html += '</tr></thead>';
+      
+      // 添加表格內容
+      html += '<tbody>';
+      data.forEach(item => {
+        html += '<tr>';
+        html += `<td style="border: 1px solid black;">${item.name}</td>`;
+        html += `<td style="border: 1px solid black;"><a href="${item.link}" style="color: inherit; text-decoration: none;">${item.link}</a></td>`;
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      
+      return html;
+    }
+
+
+    
+    // 生成純文字表格
+    function generateTextTable(data) {
+      let text = '';
+      data.forEach(item => {
+        text += `${item.name}\t${item.link}\n`;
+      });
+      return text;
+    }
+    
+    // 複製文字到剪貼簿
+    function copyToClipboard(content, format) {
+      // 創建臨時元素
+      const container = document.createElement('div');
+      
+      if (format === 'html') {
+        // 對於 HTML 格式，我們需要使用 contentEditable 和 innerHTML
+        container.innerHTML = content;
+        container.contentEditable = 'true';
+        container.style.position = 'fixed';
+        container.style.left = '-9999px';
+        document.body.appendChild(container);
+        
+        // 選擇內容
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(container);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        
+        // 執行複製命令
+        let success = false;
+        try {
+          success = document.execCommand('copy');
+        } catch (err) {
+          console.error('複製失敗: ', err);
+        }
+        
+        // 清理
+        selection.removeAllRanges();
+        document.body.removeChild(container);
+        
+        // 顯示結果
+        showToast(success ? translations[currentLang].copySuccess : translations[currentLang].copyFailed);
+      } else {
+        // 純文字格式使用 textarea
+        const textarea = document.createElement('textarea');
+        textarea.value = content;
+        textarea.style.position = 'fixed';
+        document.body.appendChild(textarea);
+        textarea.select();
+        
+        let success = false;
+        try {
+          success = document.execCommand('copy');
+        } catch (err) {
+          console.error('複製失敗: ', err);
+        }
+        
+        document.body.removeChild(textarea);
+        showToast(success ? translations[currentLang].copySuccess : translations[currentLang].copyFailed);
+      }
+    }
+    
+    // 顯示提示訊息
+    function showToast(message) {
+      const toast = document.getElementById('copy-toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
   </script>
 </body>
 </html>
+<!-- 更新下方會出現表格 -->
