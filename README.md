@@ -13,10 +13,11 @@
 
 ---
 
+
 <a name="chinese-中文"></a>
 ## 中文版
 
-一個簡單易用的工具，可以擷取 Google Drive 資料夾中的檔案名稱與分享連結，並匯出為 CSV 清單。
+一個簡單易用的工具，可以擷取 Google Drive 資料夾中的[名稱]與[分享連結]，並匯出為 CSV 清單。
 
 ### 線上使用
 
@@ -26,7 +27,7 @@
 
 
 ### 功能特色
-
+－20250306更新：新增網頁下方可直接複製的表格。
 - 從 Google Drive 資料夾中擷取所有檔案和子資料夾的名稱與連結
 - 支援中文和英文界面
 - 將結果匯出為 UTF-8 編碼的 CSV 檔案
@@ -81,8 +82,8 @@
 
 - 開發者：blues32767
 - GitHub：https://github.com/blues32767/
-- 版本：1.1.0
-- 最後更新：2025/03/04
+- 版本：1.1.1
+- 最後更新：2025/03/06
 
 ---
 
@@ -98,7 +99,7 @@ Tool link：
 (Google Apps Script deployed version):
 
 ### Features
-
+- Update 20250306: Added a table that can be copied directly at the bottom of the web page.
 - Extract all files and subfolders names and links from a Google Drive folder
 - Support for both Chinese and English interfaces
 - Export results as UTF-8 encoded CSV files
