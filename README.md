@@ -24,7 +24,15 @@
 工具連結：
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 (Google Apps Script 部署版本)
+## ☕ 支持開發者 (Support Me)
 
+如果您覺得這個工具幫您省下了寶貴的時間，歡迎請我喝杯咖啡，這將支持我繼續維護與開發更多好用的工具！
+
+If this tool saved you time, consider buying me a coffee! Your support helps me maintain this project and build more open-source tools.
+
+<a href="https://www.buymeacoffee.com/blues32767" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
 
 ### 功能特色
 －20250306更新：新增網頁下方可直接複製的表格。
@@ -97,7 +105,15 @@ A simple tool to extract file names and sharing links from Google Drive folders 
 Tool link：
 [https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec](https://script.google.com/macros/s/AKfycbxvKJuFiXlsMoH9t7rWpOuwcRZfPLuZKvrhlIS46GKJPeRNAJH9dNjbV_y1k_DzyZsk/exec)
 (Google Apps Script deployed version):
+## ☕ 支持開發者 (Support Me)
 
+如果您覺得這個工具幫您省下了寶貴的時間，歡迎請我喝杯咖啡，這將支持我繼續維護與開發更多好用的工具！
+
+If this tool saved you time, consider buying me a coffee! Your support helps me maintain this project and build more open-source tools.
+
+<a href="https://www.buymeacoffee.com/blues32767" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
+</a>
 ### Features
 - Update 20250306: Added a table that can be copied directly at the bottom of the web page.
 - Extract all files and subfolders names and links from a Google Drive folder
