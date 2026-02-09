@@ -114,6 +114,7 @@ If this tool saved you time, consider buying me a coffee! Your support helps me 
 <a href="https://www.buymeacoffee.com/blues32767" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
 </a>
+
 ### Features
 - Update 20250306: Added a table that can be copied directly at the bottom of the web page.
 - Extract all files and subfolders names and links from a Google Drive folder
